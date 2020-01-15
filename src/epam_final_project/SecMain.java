@@ -1,15 +1,21 @@
 package epam_final_project;
 
-import epam_final_project.work.ParseString;
+import epam_final_project.exception.InvalidCharactersEnteredExceptions;
+import epam_final_project.exception.ParenthesisException;
+import epam_final_project.rpn.ValidateAndManipulations;
 
 public class SecMain {
     public static void main(String[] args) {
-        ParseString parseString = new ParseString();
-        String value = "(-3 + 9.0)";
-        value = value.replaceAll(" ", "");
-        System.out.println(parseString.result(value));
-        value = value.substring(1, value.length() -1);
-        System.out.println(value);
-        
+        ValidateAndManipulations validateAndManipulations = new ValidateAndManipulations();
+        String s = "()589((+) , 665656)     455656 9+    6.3";
+        s = validateAndManipulations.allStringManipulation(s);
+        System.out.println(s);
+        try {
+            validateAndManipulations.allStringValidate(s);
+            validateAndManipulations.isStringHasTwoDotInOneCode(s);
+        } catch (ParenthesisException | InvalidCharactersEnteredExceptions e) {
+            System.out.println(e);
+        }
+
     }
 }
