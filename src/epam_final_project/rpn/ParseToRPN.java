@@ -50,21 +50,24 @@ public class ParseToRPN {
             if (isDelimiter(curr)) {
                 if (curr.equals("(")) stackOperators.push(curr);
                 else if (curr.equals(")")) {
-                    while (!stackOperators.peek().equals("(")) {
-                        rnp_values.add(stackOperators.pop());
+                    if (stackOperators.peekFirst() == null) {
+                        throw new IncorrectExpressionException("Некорректное выражение");
+                    }
+                    while (!stackOperators.peekFirst().equals("(")) {
+                        rnp_values.add(stackOperators.removeFirst());
                         if (stackOperators.isEmpty()) {
                             throw new ParenthesisException("Скобки не согласованы");
                         }
                     }
-                    stackOperators.pop();
+                    stackOperators.removeFirst();
                 } else {
                     if (curr.equals("-") && (prev.equals("")
                             || (isDelimiter(prev) && !prev.equals(")")))) {
                         curr = "u-";
                     } else {
                         while (!stackOperators.isEmpty()
-                                && (priority(curr) <= priority(stackOperators.peek()))) {
-                            rnp_values.add(stackOperators.pop());
+                                && (priority(curr) <= priority(stackOperators.peekFirst()))) {
+                            rnp_values.add(stackOperators.removeFirst());
                         }
                     }
                     stackOperators.push(curr);
@@ -79,8 +82,8 @@ public class ParseToRPN {
         }
 
         while (!stackOperators.isEmpty()) {
-            if (isOperator(stackOperators.peek())) {
-                rnp_values.add(stackOperators.pop());
+            if (isOperator(stackOperators.peekFirst())) {
+                rnp_values.add(stackOperators.removeFirst());
             } else {
                 throw new ParenthesisException("Скобки не согласованы");
             }

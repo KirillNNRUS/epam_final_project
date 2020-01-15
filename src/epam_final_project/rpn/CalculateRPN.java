@@ -19,34 +19,44 @@ public class CalculateRPN {
             throw new IncorrectRPNArrayException("Получена некорректная Обратная польская запись");
         }
 
-        List<String> correctValue = value;
         //Удаляем секретный ингридиент
-        correctValue.remove(correctValue.size() - 1);
+        value.remove(value.size() - 1);
 
         Deque<Double> stackOperators = new ArrayDeque<>();
-        for (String x : correctValue) {
-            if (x.equals("+")) {
-                stackOperators.push(stackOperators.pop() + stackOperators.pop());
-            } else if (x.equals("^")) {
-                Double b = stackOperators.pop(), a = stackOperators.pop();
-                stackOperators.push(Math.pow(a, b));
-            } else if (x.equals("-")) {
-                Double b = stackOperators.pop(), a = stackOperators.pop();
-                stackOperators.push(a - b);
-            } else if (x.equals("*")) {
-                stackOperators.push(stackOperators.pop() * stackOperators.pop());
-            } else if (x.equals("/")) {
-                Double b = stackOperators.pop(), a = stackOperators.pop();
-                if (b == 0) {
-                    throw new DivisionByZeroException("Нельзя делить на \"0\"");
+        for (String x : value) {
+            switch (x) {
+                case "+":
+                    stackOperators.addFirst(stackOperators.removeFirst() + stackOperators.removeFirst());
+                    break;
+                case "^": {
+                    Double b = stackOperators.removeFirst(), a = stackOperators.removeFirst();
+                    stackOperators.addFirst(Math.pow(a, b));
+                    break;
                 }
-                stackOperators.push(a / b);
-            } else if (x.equals("u-")) {
-                stackOperators.push(-stackOperators.pop());
-            } else {
-                stackOperators.push(Double.valueOf(x));
+                case "-": {
+                    Double b = stackOperators.removeFirst(), a = stackOperators.removeFirst();
+                    stackOperators.addFirst(a - b);
+                    break;
+                }
+                case "*":
+                    stackOperators.addFirst(stackOperators.removeFirst() * stackOperators.removeFirst());
+                    break;
+                case "/": {
+                    Double b = stackOperators.removeFirst(), a = stackOperators.removeFirst();
+                    if (b == 0) {
+                        throw new DivisionByZeroException("Нельзя делить на \"0\"");
+                    }
+                    stackOperators.addFirst(a / b);
+                    break;
+                }
+                case "u-":
+                    stackOperators.addFirst(-stackOperators.removeFirst());
+                    break;
+                default:
+                    stackOperators.addFirst(Double.valueOf(x));
+                    break;
             }
         }
-        return stackOperators.pop();
+        return stackOperators.removeFirst();
     }
 }

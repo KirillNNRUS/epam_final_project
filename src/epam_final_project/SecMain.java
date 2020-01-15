@@ -15,7 +15,8 @@ public class SecMain {
         CalculateRPN calculateRPN = new CalculateRPN();
         List<String> list = new ArrayList<>();
 
-        String s = "-7,6-9";
+        String s = "7,6(5)+ ((5,9 + 0,3) - (-7,66 + -3,4))";
+        //TODO может удастся придумать, что делать с этим?!
         s = validateAndManipulation.allStringManipulation(s);
         System.out.println(s);
         try {
@@ -32,8 +33,7 @@ public class SecMain {
             System.out.println(e);
         }
 
-        list.clear();
-        System.out.println(list);
+
 
         try {
             System.out.println(calculateRPN.calculate(list));

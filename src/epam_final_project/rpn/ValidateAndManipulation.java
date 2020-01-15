@@ -13,15 +13,16 @@ public class ValidateAndManipulation {
     // плюс, минус, точка, запятая, звездочка, slash, circumflexus (^)
     //Так и не понял, как написать backslash (включить в RegExp символ backslash),
     // чтобы потом заменить на slash, подскажите пожалуйста :-)
-    private final String spaces = "\\s+";
-    private final String NoSpace = "";
-    private final String comma = ",";
-    private final String dot = ".";
-    private final String twoDot = "[.]{2}";
+    private final String SPACES = "\\s+";
+    private final String NO_SPACE = "";
+    private final String COMMA = ",";
+    private final String DOT = ".";
+    private final String TWO_DOT = "[.]{2}";
+    private final String INCORRECT_PARENTHESES_VERSION_ONE = "[(][\\d]+[.][\\d]+[)][\\d]";
     //Для 589..665656
-    private final String twoDotInOneCodeVersion1 = "[\\d]+[.][\\d]+[.]";
+    private final String TWO_DOT_IN_ONE_CODE_VERSION_ONE = "[\\d]+[.][\\d]+[.]";
     //Для 589.665656.
-    private final String twoDotInOneCodeVersion2 = "[.][\\d]+[.][\\d]+";
+    private final String TWO_DOT_IN_ONE_CODE_VERSION_TWO = "[.][\\d]+[.][\\d]+";
     //Для .589.665656
     //Хоть IDEA и предлагает сделать их все локальными, оставлю,
     // мне так больше нравиться, когда все в одном месте
@@ -35,12 +36,12 @@ public class ValidateAndManipulation {
 
     private String removeSpaces(String value) {
         //Удаляю пробелы
-        return value.replaceAll(spaces, NoSpace);
+        return value.replaceAll(SPACES, NO_SPACE);
     }
 
     private String replaceCommaDot(String value) {
         //Делаю из запятой точку
-        return value.replaceAll(comma, dot);
+        return value.replaceAll(COMMA, DOT);
     }
 
     public void allStringValidate(String value)
@@ -54,7 +55,7 @@ public class ValidateAndManipulation {
             throws InvalidCharactersEnteredException {
         //А вдруг две точки типов 589.665656. или .589.665656 ?!
 
-        Pattern pattern = Pattern.compile(twoDotInOneCodeVersion1);
+        Pattern pattern = Pattern.compile(TWO_DOT_IN_ONE_CODE_VERSION_ONE);
         Matcher matcher = pattern.matcher(value);
 
         if (matcher.find()) {
@@ -64,7 +65,7 @@ public class ValidateAndManipulation {
                     "Некорректная расстановка точек " + value.substring(start, end));
         }
 
-        pattern = Pattern.compile(twoDotInOneCodeVersion2);
+        pattern = Pattern.compile(TWO_DOT_IN_ONE_CODE_VERSION_TWO);
         matcher = pattern.matcher(value);
 
         if (matcher.find()) {
@@ -79,7 +80,7 @@ public class ValidateAndManipulation {
             throws InvalidCharactersEnteredException {
         //А вдруг две точки 589..665656 ?!
 
-        Pattern pattern = Pattern.compile(twoDot);
+        Pattern pattern = Pattern.compile(TWO_DOT);
         Matcher matcher = pattern.matcher(value);
 
         if (matcher.find()) {
