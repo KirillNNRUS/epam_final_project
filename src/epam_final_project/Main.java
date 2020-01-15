@@ -2,9 +2,9 @@ package epam_final_project;
 
 import epam_final_project.console.ConsoleInput;
 import epam_final_project.console.ConsoleOutput;
-import epam_final_project.exception.InvalidCharactersEnteredExceptions;
+import epam_final_project.exception.InvalidCharactersEnteredException;
 import epam_final_project.exception.ParenthesisException;
-import epam_final_project.rpn.ValidateAndManipulations;
+import epam_final_project.rpn.ValidateAndManipulation;
 
 public class Main {
     static boolean begin = true;
@@ -14,7 +14,7 @@ public class Main {
     public static void main(String[] args) {
         ConsoleInput consoleInput = new ConsoleInput();
         ConsoleOutput consoleOutput = new ConsoleOutput();
-        ValidateAndManipulations validateAndManipulations = new ValidateAndManipulations();
+        ValidateAndManipulation validateAndManipulation = new ValidateAndManipulation();
 
         consoleOutput.consoleOutput("Данная программа может сосчитать введенное Вами математическое выражение");
         consoleOutput.consoleOutput("Хотите попробовать?");
@@ -27,11 +27,11 @@ public class Main {
             input = "";
             input = consoleInput.scannerInputString();
 
-            input = validateAndManipulations.allStringManipulation(input);
+            input = validateAndManipulation.allStringManipulation(input);
 
             try {
-                validateAndManipulations.allStringValidate(input);
-            } catch (InvalidCharactersEnteredExceptions | ParenthesisException e) {
+                validateAndManipulation.allStringValidate(input);
+            } catch (InvalidCharactersEnteredException | ParenthesisException e) {
                 System.err.println(e);
                 consoleOutput.consoleOutput("Хотите попробовать еще раз?");
                 startOrEnd();
