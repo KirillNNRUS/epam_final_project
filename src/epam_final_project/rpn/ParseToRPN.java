@@ -1,7 +1,7 @@
 package epam_final_project.rpn;
 
 import epam_final_project.exception.IncorrectExpressionException;
-import epam_final_project.exception.ParenthesisException;
+import epam_final_project.exception.IncorrectParenthesisException;
 
 import java.util.*;
 
@@ -29,12 +29,13 @@ public class ParseToRPN {
     private int priority(String token) {
         if (token.equals("(")) return 1;
         if (token.equals("+") || token.equals("-")) return 2;
-        if (token.equals("*") || token.equals("/") || token.equals("^")) return 3;
-        return 4;
+        if (token.equals("*") || token.equals("/")) return 3;
+        if (token.equals("^")) return 4;
+        return 5;
     }
 
     public List<String> parseToRPN(String infix)
-            throws ParenthesisException, IncorrectExpressionException {
+            throws IncorrectParenthesisException, IncorrectExpressionException {
         List<String> rnp_values = new ArrayList<>();
         Deque<String> stackOperators = new ArrayDeque<>();
         StringTokenizer tokenizer = new StringTokenizer(infix, delimiters, true);
@@ -44,19 +45,17 @@ public class ParseToRPN {
         while (tokenizer.hasMoreTokens()) {
             curr = tokenizer.nextToken();
             if (!tokenizer.hasMoreTokens() && isOperator(curr)) {
-                throw new IncorrectExpressionException("Некорректное выражение");
+                incorrectExpression();
             }
 
             if (isDelimiter(curr)) {
-                if (curr.equals("(")) stackOperators.push(curr);
+                if (curr.equals("(")) stackOperators.addFirst(curr);
                 else if (curr.equals(")")) {
-                    if (stackOperators.peekFirst() == null) {
-                        throw new IncorrectExpressionException("Некорректное выражение");
-                    }
+
                     while (!stackOperators.peekFirst().equals("(")) {
                         rnp_values.add(stackOperators.removeFirst());
                         if (stackOperators.isEmpty()) {
-                            throw new ParenthesisException("Скобки не согласованы");
+                            incorrectParenthesis();
                         }
                     }
                     stackOperators.removeFirst();
@@ -65,12 +64,13 @@ public class ParseToRPN {
                             || (isDelimiter(prev) && !prev.equals(")")))) {
                         curr = "u-";
                     } else {
+
                         while (!stackOperators.isEmpty()
                                 && (priority(curr) <= priority(stackOperators.peekFirst()))) {
                             rnp_values.add(stackOperators.removeFirst());
                         }
                     }
-                    stackOperators.push(curr);
+                    stackOperators.addFirst(curr);
                 }
 
             } else {
@@ -85,7 +85,7 @@ public class ParseToRPN {
             if (isOperator(stackOperators.peekFirst())) {
                 rnp_values.add(stackOperators.removeFirst());
             } else {
-                throw new ParenthesisException("Скобки не согласованы");
+                incorrectParenthesis();
             }
         }
 
@@ -93,4 +93,13 @@ public class ParseToRPN {
         rnp_values.add(RPN_ARRAY);
         return rnp_values;
     }
+
+    private void incorrectExpression() throws IncorrectExpressionException {
+        throw new IncorrectExpressionException("Некорректное выражение");
+    }
+
+    private void incorrectParenthesis() throws IncorrectParenthesisException {
+        throw new IncorrectParenthesisException("Скобки не согласованы");
+    }
+
 }

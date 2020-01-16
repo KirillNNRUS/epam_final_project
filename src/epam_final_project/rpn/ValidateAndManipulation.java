@@ -1,7 +1,7 @@
 package epam_final_project.rpn;
 
 import epam_final_project.exception.IncorrectExpressionException;
-import epam_final_project.exception.ParenthesisException;
+import epam_final_project.exception.IncorrectParenthesisException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -61,7 +61,7 @@ public class ValidateAndManipulation {
     }
 
     public void allStringValidate(String value)
-            throws ParenthesisException, IncorrectExpressionException {
+            throws IncorrectParenthesisException, IncorrectExpressionException {
         stringHasBadCharacters(value);
         stringHasTwoDot(value);
         parenthesisIncorrect(value);
@@ -180,7 +180,7 @@ public class ValidateAndManipulation {
     }
 
     private void parenthesisIncorrect(String value)
-            throws ParenthesisException {
+            throws IncorrectParenthesisException {
         //Количество "(" должно быть равно количеству ")".
         //Простейшая проверка вот такое ")(" не поймает
 
@@ -197,7 +197,7 @@ public class ValidateAndManipulation {
         }
 
         if (beginParenthesis != endParenthesis) {
-            throw new ParenthesisException(
+            throw new IncorrectParenthesisException(
                     "Количество открывающих скобок, не равно количеству закрывающих.");
         }
     }

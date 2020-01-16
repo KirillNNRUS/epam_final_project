@@ -3,7 +3,7 @@ package epam_final_project;
 import epam_final_project.console.ConsoleInput;
 import epam_final_project.console.ConsoleOutput;
 import epam_final_project.exception.IncorrectExpressionException;
-import epam_final_project.exception.ParenthesisException;
+import epam_final_project.exception.IncorrectParenthesisException;
 import epam_final_project.rpn.ValidateAndManipulation;
 
 public class Main {
@@ -31,7 +31,7 @@ public class Main {
 
             try {
                 validateAndManipulation.allStringValidate(input);
-            } catch (IncorrectExpressionException | ParenthesisException e) {
+            } catch (IncorrectExpressionException | IncorrectParenthesisException e) {
                 System.err.println(e);
                 consoleOutput.consoleOutput("Хотите попробовать еще раз?");
                 startOrEnd();

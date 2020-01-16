@@ -15,14 +15,14 @@ public class SecMain {
         CalculateRPN calculateRPN = new CalculateRPN();
         List<String> list = new ArrayList<>();
 
-        String s = "(7,6+ ((5,9 + 0,3))*(-5+7) - 8 / 6 -  (36)*3 - (-7,66 + -3,4))";
+        String s = "(7,6+ ((5,9 + 0,3))*(-5+7) - 8 / 6 ^ 3-  (36)*3 - (-7,66 + -3,4))";
 
         s = validateAndManipulation.allStringManipulation(s);
         System.out.println(s);
         try {
             validateAndManipulation.allStringValidate(s);
             validateAndManipulation.stringHasTwoDotInOneCode(s);
-        } catch (ParenthesisException | IncorrectExpressionException e) {
+        } catch (IncorrectParenthesisException | IncorrectExpressionException e) {
             System.err.println(e);
             end(777);
         }
@@ -30,7 +30,7 @@ public class SecMain {
         try {
             System.out.println(parseToRPN.parseToRPN(s));
             list = parseToRPN.parseToRPN(s);
-        } catch (ParenthesisException | IncorrectExpressionException e) {
+        } catch (IncorrectParenthesisException | IncorrectExpressionException e) {
             System.err.println(e);
             end(777);
         }
