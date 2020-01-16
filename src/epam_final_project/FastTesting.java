@@ -8,14 +8,14 @@ import epam_final_project.rpn.ValidateAndManipulation;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SecMain {
+public class FastTesting {
     public static void main(String[] args) {
         ValidateAndManipulation validateAndManipulation = new ValidateAndManipulation();
         ParseToRPN parseToRPN = new ParseToRPN();
         CalculateRPN calculateRPN = new CalculateRPN();
         List<String> list = new ArrayList<>();
 
-        String s = " 50,9*(-3,69)/2,1+10,09^(-3)";
+        String s = " 16*(50,9^4*(3,69))-(6/2,1+10,09^(-3))*3/6.3";
 
         s = validateAndManipulation.allStringManipulation(s);
         System.out.println(s);
