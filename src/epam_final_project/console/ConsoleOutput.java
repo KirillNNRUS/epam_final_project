@@ -12,6 +12,8 @@ public class ConsoleOutput {
     }
 
     public void printAttentions() {
+        System.out.println("Обратите внимание! Запятые буду заменены на точки!");
         System.out.println("Обратите внимание! Знак делить это \"/\"!");
+        System.out.println("Обратите внимание! Минусовые значения, необходимо писать в скобках, например 5 * (-4)");
     }
 }
