@@ -15,31 +15,36 @@ public class SecMain {
         CalculateRPN calculateRPN = new CalculateRPN();
         List<String> list = new ArrayList<>();
 
-        String s = "7,6(5)+ ((5,9 + 0,3) - (-7,66 + -3,4))";
-        //TODO может удастся придумать, что делать с этим?!
+        String s = "(7,6+ ((5,9 + 0,3))*(-5+7) - 8 / 6 -  (36)*3 - (-7,66 + -3,4))";
+
         s = validateAndManipulation.allStringManipulation(s);
         System.out.println(s);
         try {
             validateAndManipulation.allStringValidate(s);
-            validateAndManipulation.isStringHasTwoDotInOneCode(s);
-        } catch (ParenthesisException | InvalidCharactersEnteredException e) {
-            System.out.println(e);
+            validateAndManipulation.stringHasTwoDotInOneCode(s);
+        } catch (ParenthesisException | IncorrectExpressionException e) {
+            System.err.println(e);
+            end(777);
         }
 
         try {
             System.out.println(parseToRPN.parseToRPN(s));
             list = parseToRPN.parseToRPN(s);
         } catch (ParenthesisException | IncorrectExpressionException e) {
-            System.out.println(e);
+            System.err.println(e);
+            end(777);
         }
-
-
 
         try {
             System.out.println(calculateRPN.calculate(list));
         } catch (DivisionByZeroException | IncorrectRPNArrayException e) {
-            System.out.println(e);
+            System.err.println(e);
+            end(777);
         }
 
+    }
+
+    public static void end(int status) {
+        System.exit(status);
     }
 }
