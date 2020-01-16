@@ -15,7 +15,7 @@ public class SecMain {
         CalculateRPN calculateRPN = new CalculateRPN();
         List<String> list = new ArrayList<>();
 
-        String s = " 8 - 3 (-7.6)";
+        String s = " 50,9*(-3,69)/2,1+10,09^(-3)";
 
         s = validateAndManipulation.allStringManipulation(s);
         System.out.println(s);

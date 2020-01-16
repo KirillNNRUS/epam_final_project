@@ -21,19 +21,26 @@ public class ValidateAndManipulation {
     private final String NO_SPACE = "";
     private final String COMMA = ",";
     private final String DOT = ".";
-    private final String TWO_DOT = "[.]{2}";
-    private final String TWO_DOT_IN_ONE_CODE_VERSION_ONE = "[\\d]+[.][\\d]+[.]";
-    //Для 589.665656.
-    private final String TWO_DOT_IN_ONE_CODE_VERSION_TWO = "[.][\\d]+[.][\\d]+";
-    //Для .589.665656
     //Хоть IDEA и предлагает сделать их все локальными, оставлю,
     // мне так больше нравиться, когда все в одном месте
     //А как все таки правильнее? локальные переменные или все в одном месте?
 
+    private List<String> notValidDots = new ArrayList<String>() {
+        {
+            this.add("[\\d]+[.][\\d]+[.]");
+            //Для 589.665656.
+            this.add("[.][\\d]+[.][\\d]+");
+            //Для .589.665656
+            this.add("[.]{2}");
+            //Для 589..665656
+        }
+    };
+
     private List<String> notValidOperators = new ArrayList<String>() {
         {
-            //Сколько не пытался собрать циклом в цикле / и ^ в RegExp, так и не смог
-            //поэтому хардкод!
+            //Сколько не пытался собрать циклом в цикле / и ^ для того, чтобы сделать RegExp,
+            // ак и не смог поэтому хардкод!
+
             // *-+/^
             this.add("[*]{2}");
             this.add("[*][-]");
@@ -73,25 +80,25 @@ public class ValidateAndManipulation {
 
     private List<String> notValidParenthesis = new ArrayList<String>() {
         {
-            notValidParenthesis.add("[(][\\d]+[.][\\d]+[)][\\d]");
+            this.add("[(][\\d]+[.][\\d]+[)][\\d]");
             //Для (25,5)3
-            notValidParenthesis.add("[(][\\d]+[)][\\d]");
+            this.add("[(][\\d]+[)][\\d]");
             //Для (25)3
-            notValidParenthesis.add("[\\d][(][\\d]+[.][\\d]+[)]");
+            this.add("[\\d][(][\\d]+[.][\\d]+[)]");
             //Для 3(25,5)
-            notValidParenthesis.add("[\\d][(][\\d]+[)]");
+            this.add("[\\d][(][\\d]+[)]");
             //Для 3(25)
-            notValidParenthesis.add("[(][)]");
+            this.add("[(][)]");
             //Для ()
-            notValidParenthesis.add("[)][(]");
+            this.add("[)][(]");
             //Для )(
-            notValidParenthesis.add("[)][\\d]+[(]");
+            this.add("[)][\\d]+[(]");
             //Для )5(
-            notValidParenthesis.add("[)][\\d]+[.][\\d]+[(]");
+            this.add("[)][\\d]+[.][\\d]+[(]");
             //Для )5.5(
-            notValidParenthesis.add("[\\d][(][-][\\d]+[.][\\d]+[)]");
+            this.add("[\\d][(][-][\\d]+[.][\\d]+[)]");
             //Для 3(-25,5)
-            notValidParenthesis.add("[\\d][(][-][\\d]+[)]");
+            this.add("[\\d][(][-][\\d]+[)]");
             //Для 3(-25)
         }
     };
@@ -116,7 +123,6 @@ public class ValidateAndManipulation {
             throws IncorrectParenthesisException, IncorrectExpressionException {
         stringHasBadCharacters(value);
         doubleOperations(value);
-        stringHasTwoDot(value);
         parenthesisIncorrect(value);
         incorrectParentheses(value);
     }
@@ -134,8 +140,8 @@ public class ValidateAndManipulation {
 
     private void incorrectParentheses(String value)
             throws IncorrectExpressionException {
-        for (String operation : notValidParenthesis) {
-            Pattern pattern = Pattern.compile(operation);
+        for (String parentheses : notValidParenthesis) {
+            Pattern pattern = Pattern.compile(parentheses);
             Matcher matcher = pattern.matcher(value);
 
             if (matcher.find()) {
@@ -153,32 +159,13 @@ public class ValidateAndManipulation {
 
     public void stringHasTwoDotInOneCode(String value)
             throws IncorrectExpressionException {
-        //А вдруг две точки типов 589.665656. или .589.665656 ?!
+        for (String dots : notValidDots) {
+            Pattern pattern = Pattern.compile(dots);
+            Matcher matcher = pattern.matcher(value);
 
-        Pattern pattern = Pattern.compile(TWO_DOT_IN_ONE_CODE_VERSION_ONE);
-        Matcher matcher = pattern.matcher(value);
-
-        if (matcher.find()) {
-            throwIncorrectExpressionException(matcher, value, INCORRECT_DOT);
-        }
-
-        pattern = Pattern.compile(TWO_DOT_IN_ONE_CODE_VERSION_TWO);
-        matcher = pattern.matcher(value);
-
-        if (matcher.find()) {
-            throwIncorrectExpressionException(matcher, value, INCORRECT_DOT);
-        }
-    }
-
-    private void stringHasTwoDot(String value)
-            throws IncorrectExpressionException {
-        //А вдруг две точки 589..665656 ?!
-
-        Pattern pattern = Pattern.compile(TWO_DOT);
-        Matcher matcher = pattern.matcher(value);
-
-        if (matcher.find()) {
-            throwIncorrectExpressionException(matcher, value, "Выявлено две или более точки подряд.");
+            if (matcher.find()) {
+                throwIncorrectExpressionException(matcher, value, INCORRECT_DOT);
+            }
         }
     }
 
@@ -197,7 +184,6 @@ public class ValidateAndManipulation {
     private void parenthesisIncorrect(String value)
             throws IncorrectParenthesisException {
         //Количество "(" должно быть равно количеству ")".
-        //Простейшая проверка вот такое ")(" не поймает
 
         int beginParenthesis = 0;
         int endParenthesis = 0;
