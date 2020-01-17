@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 
 public class ValidateAndManipulation {
     private final String INCORRECT_PARENTHESES_STRING = "Некорректная расстановка скобок";
+    private final String INCORRECT_PARENTHESES_BEGIN_OR_END = "Некорректная скобка, в начале или в конце строки : ";
     private final String INCORRECT_DOT = "Некорректная расстановка точек";
     private final String INCORRECT_OPERATION = "Некорректная операция";
     private String notValidRegExpString = "[^\\d ()+\\-.,*/^]+";
@@ -149,6 +150,9 @@ public class ValidateAndManipulation {
             Matcher matcher = pattern.matcher(value);
 
             if (matcher.find()) {
+                if (parentheses.equals("^[)]") || parentheses.equals("[(]$")) {
+                    throwIncorrectExpressionException(matcher, value, INCORRECT_PARENTHESES_BEGIN_OR_END);
+                }
                 throwIncorrectExpressionException(matcher, value, INCORRECT_PARENTHESES_STRING);
             }
         }

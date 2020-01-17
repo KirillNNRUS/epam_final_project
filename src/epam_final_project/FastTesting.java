@@ -15,8 +15,8 @@ public class FastTesting {
         CalculateRPN calculateRPN = new CalculateRPN();
         List<String> list = new ArrayList<>();
 
-        String s = " 16*(50,9^4*(3,69))-(6/2,1+10,09^(-3))*3/6.3";
-//        String s = " )5.3+65(639.3-6";
+//        String s = " 16*(50,9^4*(3,69))-(6/2,1+10,09^(-3))*3/6.3";
+        String s = " )5.3+65(639.3-6";
 
         s = validateAndManipulation.allStringManipulation(s);
         System.out.println(s);
