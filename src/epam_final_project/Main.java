@@ -42,34 +42,31 @@ public class Main {
 
             try {
                 validateAndManipulation.allStringValidate(input);
+                try {
+                    list = parseToRPN.parseToRPN(input);
+                    try {
+                        calculateRPN.calculate(list);
+                        //Если ошибка дальше просто не пойдет
+                        list.add(RPN_ARRAY);
+                        //вернем секретный ингридиент, который был убран в строке calculateRPN.calculate(list);
+                        consoleOutput.consoleOutput("Ваше выражение : " + input);
+                        consoleOutput.consoleOutput("Результат Вашего выражения : " + calculateRPN.calculate(list));
+                    } catch (DivisionByZeroException | IncorrectRPNArrayException e) {
+                        System.err.println(e);
+                    } finally {
+                        begin = false;
+                        consoleInput.scannerClose();
+                    }
+                } catch (IncorrectParenthesisException | IncorrectExpressionException e) {
+                    System.err.println(e);
+                    consoleOutput.consoleOutput("Хотите попробовать еще раз?");
+                    startOrEnd();
+                }
             } catch (IncorrectExpressionException | IncorrectParenthesisException e) {
                 System.err.println(e);
                 consoleOutput.consoleOutput("Хотите попробовать еще раз?");
                 startOrEnd();
             }
-
-            try {
-                list = parseToRPN.parseToRPN(input);
-            } catch (IncorrectParenthesisException | IncorrectExpressionException e) {
-                System.err.println(e);
-                consoleOutput.consoleOutput("Хотите попробовать еще раз?");
-                startOrEnd();
-            }
-
-            try {
-                calculateRPN.calculate(list);
-                //Если ошибка дальше просто не пойдет
-                list.add(RPN_ARRAY);
-                //вернем секретный ингридиент, который был убран в строке calculateRPN.calculate(list);
-                consoleOutput.consoleOutput("Ваше выражение : " + input);
-                consoleOutput.consoleOutput("Результат Вашего выражения : " + calculateRPN.calculate(list));
-            } catch (DivisionByZeroException | IncorrectRPNArrayException e) {
-                System.err.println(e);
-            } finally {
-                begin = false;
-                consoleInput.scannerClose();
-            }
-
         }
     }
 
