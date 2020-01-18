@@ -13,11 +13,11 @@ public class CalculateRPN {
 
     public Double calculate(List<String> value) throws DivisionByZeroException, IncorrectRPNArrayException {
         if (value == null || value.size() == 0) {
-            throw new IncorrectRPNArrayException("Получена некорректная Обратная польская запись");
+            throw new IncorrectRPNArrayException(simpleStrings.getINCORRECT_RPN());
         }
 
         if (!value.get(value.size() - 1).equals(simpleStrings.getRPN_ARRAY())) {
-            throw new IncorrectRPNArrayException("Получена некорректная Обратная польская запись");
+            throw new IncorrectRPNArrayException(simpleStrings.getINCORRECT_RPN());
         }
 
         //Удаляем секретный ингридиент
@@ -45,7 +45,7 @@ public class CalculateRPN {
                 case "/": {
                     Double b = stackOperators.removeFirst(), a = stackOperators.removeFirst();
                     if (b == 0) {
-                        throw new DivisionByZeroException("Нельзя делить на \"0\"");
+                        throw new DivisionByZeroException(simpleStrings.getDIVISION_BY_ZERO());
                     }
                     stackOperators.addFirst(a / b);
                     break;

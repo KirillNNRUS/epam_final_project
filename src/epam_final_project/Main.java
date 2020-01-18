@@ -6,9 +6,9 @@ import epam_final_project.exception.DivisionByZeroException;
 import epam_final_project.exception.IncorrectExpressionException;
 import epam_final_project.exception.IncorrectParenthesisException;
 import epam_final_project.exception.IncorrectRPNArrayException;
-import epam_final_project.simple.SimpleStrings;
 import epam_final_project.rpn.CalculateRPN;
 import epam_final_project.rpn.ParseToRPN;
+import epam_final_project.simple.SimpleStrings;
 import epam_final_project.work.ValidateAndManipulation;
 
 import java.util.Collections;
@@ -28,8 +28,8 @@ public class Main {
         SimpleStrings simpleStrings = new SimpleStrings();
         ValidateAndManipulation validateAndManipulation = new ValidateAndManipulation();
 
-        consoleOutput.consoleOutput("Данная программа может сосчитать введенное Вами математическое выражение");
-        consoleOutput.consoleOutput("Хотите попробовать?");
+        consoleOutput.consoleOutput(simpleStrings.getPROGRAM());
+        consoleOutput.consoleOutput(simpleStrings.getTRY());
 
         startOrEnd();
 
@@ -50,8 +50,9 @@ public class Main {
                         //Если ошибка дальше просто не пойдет
                         list.add(simpleStrings.getRPN_ARRAY());
                         //вернем секретный ингридиент, который был убран в строке calculateRPN.calculate(list);
-                        consoleOutput.consoleOutput("Ваше выражение : " + input);
-                        consoleOutput.consoleOutput("Результат Вашего выражения : " + calculateRPN.calculate(list));
+                        consoleOutput.consoleOutput(simpleStrings.getYOUR_EXPRESSION() + input);
+                        consoleOutput.consoleOutput(simpleStrings.getRESULT_YOUR_EXPRESSION()
+                                + calculateRPN.calculate(list));
                     } catch (DivisionByZeroException | IncorrectRPNArrayException e) {
                         System.err.println(e);
                     } finally {

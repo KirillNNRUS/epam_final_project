@@ -38,7 +38,7 @@ public class ParseToRPN {
     public List<String> parseToRPN(String infix)
             throws IncorrectParenthesisException, IncorrectExpressionException {
         if (infix == null || infix.equals("")) {
-            incorrectExpression("Некорректное выражение - пустая строка");
+            incorrectExpression(simpleStrings.getINCORRECT_EXPRESSION_EMPTY());
         }
         List<String> rnp_values = new ArrayList<>();
         Deque<String> stackOperators = new ArrayDeque<>();
@@ -49,7 +49,7 @@ public class ParseToRPN {
         while (tokenizer.hasMoreTokens()) {
             curr = tokenizer.nextToken();
             if (!tokenizer.hasMoreTokens() && isOperator(curr)) {
-                incorrectExpression("Некорректное выражение");
+                incorrectExpression(simpleStrings.getINCORRECT_EXPRESSION());
             }
 
             if (isDelimiter(curr)) {
