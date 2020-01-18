@@ -94,6 +94,16 @@ public class ValidateAndManipulation {
             this.add("[\\d][(]");
             //Для Цифра(
 
+            this.add("[(][*]");
+            this.add("[(][/]");
+            this.add("[(][\\^]");
+            this.add("[*][)]");
+            this.add("[/][)]");
+            this.add("[\\^][)]");
+            this.add("[-][)]");
+            this.add("[+][)]");
+            //Некорректные скобки и операции
+
         }
     };
 

@@ -16,7 +16,7 @@ public class FastTesting {
         List<String> list = new ArrayList<>();
 
         //String s = " 16*(50,9^4*(3,69))-(6/2,1+10,09^(-3))*3/6,3";
-        String s = " 34+5,3+65-1*(-)*639,3-6";
+        String s = " 34+5,3+65-1*(3-)*639,3-6";
 
         s = validateAndManipulation.allStringManipulation(s);
         System.out.println(s);
