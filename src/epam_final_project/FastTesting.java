@@ -3,7 +3,7 @@ package epam_final_project;
 import epam_final_project.exception.*;
 import epam_final_project.rpn.CalculateRPN;
 import epam_final_project.rpn.ParseToRPN;
-import epam_final_project.rpn.ValidateAndManipulation;
+import epam_final_project.work.ValidateAndManipulation;
 
 import java.util.ArrayList;
 import java.util.List;

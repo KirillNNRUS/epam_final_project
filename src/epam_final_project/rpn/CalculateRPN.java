@@ -2,20 +2,21 @@ package epam_final_project.rpn;
 
 import epam_final_project.exception.DivisionByZeroException;
 import epam_final_project.exception.IncorrectRPNArrayException;
+import epam_final_project.simple.SimpleStrings;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.List;
 
 public class CalculateRPN {
-    private final String RPN_ARRAY = "RPNArray";
+    SimpleStrings simpleStrings = new SimpleStrings();
 
     public Double calculate(List<String> value) throws DivisionByZeroException, IncorrectRPNArrayException {
         if (value == null || value.size() == 0) {
             throw new IncorrectRPNArrayException("Получена некорректная Обратная польская запись");
         }
 
-        if (!value.get(value.size() - 1).equals(RPN_ARRAY)) {
+        if (!value.get(value.size() - 1).equals(simpleStrings.getRPN_ARRAY())) {
             throw new IncorrectRPNArrayException("Получена некорректная Обратная польская запись");
         }
 

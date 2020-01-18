@@ -1,7 +1,8 @@
-package epam_final_project.rpn;
+package epam_final_project.work;
 
 import epam_final_project.exception.IncorrectExpressionException;
 import epam_final_project.exception.IncorrectParenthesisException;
+import epam_final_project.simple.SimpleStrings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,10 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ValidateAndManipulation {
-    private final String INCORRECT_PARENTHESES_STRING = "Некорректная расстановка скобок";
-    private final String INCORRECT_PARENTHESES_BEGIN_OR_END = "Некорректная скобка, в начале или в конце строки : ";
-    private final String INCORRECT_DOT = "Некорректная расстановка точек";
-    private final String INCORRECT_OPERATION = "Некорректная операция";
+    SimpleStrings simpleStrings = new SimpleStrings();
     private String notValidRegExpString = "[^\\d ()+\\-.,*/^]+";
     //По моему мнению, это выражение - Все кроме Цифр, пробела, скобок,
     // плюс, минус, точка, запятая, звездочка, slash, circumflexus (^)
@@ -102,7 +100,7 @@ public class ValidateAndManipulation {
             this.add("[\\^][)]");
             this.add("[-][)]");
             this.add("[+][)]");
-            //Некорректные скобки и операции
+            //Некорректные скобки и операции, вида СкобкаОперация или ОперацияСкобка
 
         }
     };
@@ -137,7 +135,8 @@ public class ValidateAndManipulation {
             Matcher matcher = pattern.matcher(value);
 
             if (matcher.find()) {
-                throwIncorrectExpressionException(matcher, value, INCORRECT_OPERATION);
+                throwIncorrectExpressionException(matcher, value,
+                        simpleStrings.getINCORRECT_OPERATION());
             }
         }
     }
@@ -150,9 +149,11 @@ public class ValidateAndManipulation {
 
             if (matcher.find()) {
                 if (parentheses.equals("^[)]") || parentheses.equals("[(]$")) {
-                    throwIncorrectExpressionException(matcher, value, INCORRECT_PARENTHESES_BEGIN_OR_END);
+                    throwIncorrectExpressionException(matcher, value,
+                            simpleStrings.getINCORRECT_PARENTHESES_BEGIN_OR_END());
                 }
-                throwIncorrectExpressionException(matcher, value, INCORRECT_PARENTHESES_STRING);
+                throwIncorrectExpressionException(matcher, value,
+                        simpleStrings.getINCORRECT_PARENTHESES_STRING());
             }
         }
     }
@@ -171,7 +172,8 @@ public class ValidateAndManipulation {
             Matcher matcher = pattern.matcher(value);
 
             if (matcher.find()) {
-                throwIncorrectExpressionException(matcher, value, INCORRECT_DOT);
+                throwIncorrectExpressionException(matcher, value,
+                        simpleStrings.getINCORRECT_DOT());
             }
         }
     }

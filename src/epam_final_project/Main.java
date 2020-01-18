@@ -6,9 +6,10 @@ import epam_final_project.exception.DivisionByZeroException;
 import epam_final_project.exception.IncorrectExpressionException;
 import epam_final_project.exception.IncorrectParenthesisException;
 import epam_final_project.exception.IncorrectRPNArrayException;
+import epam_final_project.simple.SimpleStrings;
 import epam_final_project.rpn.CalculateRPN;
 import epam_final_project.rpn.ParseToRPN;
-import epam_final_project.rpn.ValidateAndManipulation;
+import epam_final_project.work.ValidateAndManipulation;
 
 import java.util.Collections;
 import java.util.List;
@@ -18,13 +19,13 @@ public class Main {
     static String input = "";
     static int temp = -1;
     static List<String> list = Collections.emptyList();
-    static final String RPN_ARRAY = "RPNArray";
 
     public static void main(String[] args) {
         CalculateRPN calculateRPN = new CalculateRPN();
         ConsoleInput consoleInput = new ConsoleInput();
         ConsoleOutput consoleOutput = new ConsoleOutput();
         ParseToRPN parseToRPN = new ParseToRPN();
+        SimpleStrings simpleStrings = new SimpleStrings();
         ValidateAndManipulation validateAndManipulation = new ValidateAndManipulation();
 
         consoleOutput.consoleOutput("Данная программа может сосчитать введенное Вами математическое выражение");
@@ -33,7 +34,7 @@ public class Main {
         startOrEnd();
 
         while (begin) {
-            consoleOutput.consoleOutput("Введите математическое выражение");
+            consoleOutput.consoleOutput(simpleStrings.getENTER_EXPRESSION());
             consoleOutput.printAttentions();
             input = "";
             input = consoleInput.scannerInputString();
@@ -47,7 +48,7 @@ public class Main {
                     try {
                         calculateRPN.calculate(list);
                         //Если ошибка дальше просто не пойдет
-                        list.add(RPN_ARRAY);
+                        list.add(simpleStrings.getRPN_ARRAY());
                         //вернем секретный ингридиент, который был убран в строке calculateRPN.calculate(list);
                         consoleOutput.consoleOutput("Ваше выражение : " + input);
                         consoleOutput.consoleOutput("Результат Вашего выражения : " + calculateRPN.calculate(list));
@@ -59,26 +60,22 @@ public class Main {
                     }
                 } catch (IncorrectParenthesisException | IncorrectExpressionException e) {
                     System.err.println(e);
-                    consoleOutput.consoleOutput("Хотите попробовать еще раз?");
+                    consoleOutput.consoleOutput(simpleStrings.getSECOND_TRY());
                     startOrEnd();
                 }
             } catch (IncorrectExpressionException | IncorrectParenthesisException e) {
                 System.err.println(e);
-                consoleOutput.consoleOutput("Хотите попробовать еще раз?");
+                consoleOutput.consoleOutput(simpleStrings.getSECOND_TRY());
                 startOrEnd();
             }
         }
     }
 
-    static void yesOrNoConsolePrint() {
-        ConsoleOutput consoleOutput = new ConsoleOutput();
-        consoleOutput.consoleOutput("1 - ДА, все остальное НЕТ");
-    }
-
     static void startOrEnd() {
-        temp = -1;
+        ConsoleOutput consoleOutput = new ConsoleOutput();
         ConsoleInput consoleInput = new ConsoleInput();
-        yesOrNoConsolePrint();
+        temp = -1;
+        consoleOutput.printYesOrNo();
         temp = new ConsoleInput().scannerInputToInt();
         if (temp != 1) {
             consoleInput.scannerClose();

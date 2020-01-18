@@ -2,13 +2,14 @@ package epam_final_project.rpn;
 
 import epam_final_project.exception.IncorrectExpressionException;
 import epam_final_project.exception.IncorrectParenthesisException;
+import epam_final_project.simple.SimpleStrings;
 
 import java.util.*;
 
 public class ParseToRPN {
+    SimpleStrings simpleStrings = new SimpleStrings();
     private String operators = "+-*/^";
     private String delimiters = "()" + operators;
-    private final String RPN_ARRAY = "RPNArray";
 
     private boolean isDelimiter(String token) {
         if (token.length() != 1) return false;
@@ -58,7 +59,7 @@ public class ParseToRPN {
                     while (!stackOperators.peekFirst().equals("(")) {
                         rnp_values.add(stackOperators.removeFirst());
                         if (stackOperators.isEmpty()) {
-                            incorrectParenthesis();
+                            incorrectParenthesis(simpleStrings.getINCORRECT_PARENTHESES());
                         }
                     }
                     stackOperators.removeFirst();
@@ -88,12 +89,12 @@ public class ParseToRPN {
             if (isOperator(stackOperators.peekFirst())) {
                 rnp_values.add(stackOperators.removeFirst());
             } else {
-                incorrectParenthesis();
+                incorrectParenthesis(simpleStrings.getINCORRECT_PARENTHESES());
             }
         }
 
         //Добавляю секретный ингридиент
-        rnp_values.add(RPN_ARRAY);
+        rnp_values.add(simpleStrings.getRPN_ARRAY());
         return rnp_values;
     }
 
@@ -101,8 +102,7 @@ public class ParseToRPN {
         throw new IncorrectExpressionException(exceptionString);
     }
 
-    private void incorrectParenthesis() throws IncorrectParenthesisException {
-        throw new IncorrectParenthesisException("Скобки не согласованы");
+    private void incorrectParenthesis(String exceptionString) throws IncorrectParenthesisException {
+        throw new IncorrectParenthesisException(exceptionString);
     }
-
 }
