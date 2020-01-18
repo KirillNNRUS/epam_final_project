@@ -202,6 +202,11 @@ public class ValidateAndManipulation {
             }
             if ((String.valueOf(value.charAt(i))).equals(")")) {
                 endParenthesis++;
+                //Доп проверка, если ) появилась раньше ( выброс исключения
+                if (endParenthesis > beginParenthesis) {
+                    throw new IncorrectParenthesisException(
+                            "Найдена закрывающая скобка, ранее чем открывающая.");
+                }
             }
         }
 
