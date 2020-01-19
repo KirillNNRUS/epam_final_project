@@ -51,19 +51,16 @@ public class Validate {
             }
         }
     }
+
     private void incorrectParenthesesWithOperations(String value)
             throws IncorrectExpressionException {
-        for (String parentheses : simpleRegExp.getNotValidParenthesisWithoutOperations()) {
+        for (String parentheses : simpleRegExp.getNotValidParenthesisWithOperations()) {
             Pattern pattern = Pattern.compile(parentheses);
             Matcher matcher = pattern.matcher(value);
 
             if (matcher.find()) {
-                if (parentheses.equals("^[)]") || parentheses.equals("[(]$")) {
-                    throwIncorrectExpressionException(matcher, value,
-                            simpleStrings.getINCORRECT_PARENTHESES_BEGIN_OR_END());
-                }
                 throwIncorrectExpressionException(matcher, value,
-                        simpleStrings.getINCORRECT_PARENTHESES_STRING());
+                        simpleStrings.getINCORRECT_PARENTHESES_OPERATIONS());
             }
         }
     }

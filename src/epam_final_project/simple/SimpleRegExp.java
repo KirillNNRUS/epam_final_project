@@ -129,6 +129,10 @@ public class SimpleRegExp {
         }
     };
 
+    public List<String> getNotValidParenthesisWithOperations() {
+        return notValidParenthesisWithOperations;
+    }
+
     public List<String> getNotValidDots() {
         return notValidDots;
     }

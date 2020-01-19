@@ -16,6 +16,7 @@ public class SimpleStrings {
     private final String INCORRECT_PARENTHESES_BEGIN_OR_END = "Некорректная скобка, в начале или в конце строки : ";
     private final String INCORRECT_PARENTHESES_END = "Найдена закрывающая скобка, ранее чем открывающая.";
     private final String INCORRECT_PARENTHESES_END_AND_BEGIN = "Количество открывающих скобок, не равно количеству закрывающих.";
+    private final String INCORRECT_PARENTHESES_OPERATIONS = "Некорректная операция в скобке";
     private final String INCORRECT_PARENTHESES_STRING = "Некорректная расстановка скобок";
     private final String INCORRECT_RPN = "Получена некорректная Обратная польская запись";
     private final String INCORRECT_SYMBOLS = "Выявлены некорректные символы.";
@@ -29,6 +30,10 @@ public class SimpleStrings {
 
     public String getINCORRECT_EXPRESSION() {
         return INCORRECT_EXPRESSION;
+    }
+
+    public String getINCORRECT_PARENTHESES_OPERATIONS() {
+        return INCORRECT_PARENTHESES_OPERATIONS;
     }
 
     public String getINCORRECT_SYMBOLS() {
