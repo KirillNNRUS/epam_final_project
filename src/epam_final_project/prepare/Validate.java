@@ -59,6 +59,10 @@ public class Validate {
             Matcher matcher = pattern.matcher(value);
 
             if (matcher.find()) {
+                if (parentheses.equals("[(][\\d]{1,}[.]{0,}[\\d]{0,}[)]")) {
+                    throwIncorrectExpressionException(matcher, value,
+                            simpleStrings.getFORGOT_MINUS());
+                }
                 throwIncorrectExpressionException(matcher, value,
                         simpleStrings.getINCORRECT_PARENTHESES_OPERATIONS());
             }

@@ -7,13 +7,14 @@ public class SimpleStrings {
     private final String ATTENTION_04 = "Обратите внимание! Если Вы забудете знак минус 5 * (4). Программа воспримет это как 5 * 4";
     private final String DIVISION_BY_ZERO = "Нельзя делить на \"0\"";
     private final String ENTER_EXPRESSION = "Введите математическое выражение";
+    private final String FORGOT_MINUS = "Некорректная расстановка скобок. Вы забыли поставить минус? :";
     private final String INCORRECT_DOT = "Некорректная расстановка точек";
     private final String INCORRECT_EXPRESSION = "Некорректное выражение";
     private final String INCORRECT_EXPRESSION_EMPTY = "Некорректное выражение - пустая строка";
     private final String INCORRECT_OPERATION = "Некорректная операция";
     private final String INCORRECT_OPERATION_BEGIN_OR_END = "Знак операции в начале или конце выражения";
     private final String INCORRECT_PARENTHESES = "Скобки не согласованы";
-    private final String INCORRECT_PARENTHESES_BEGIN_OR_END = "Некорректная скобка, в начале или в конце строки : ";
+    private final String INCORRECT_PARENTHESES_BEGIN_OR_END = "Некорректная скобка, в начале или в конце строки :";
     private final String INCORRECT_PARENTHESES_END = "Найдена закрывающая скобка, ранее чем открывающая.";
     private final String INCORRECT_PARENTHESES_END_AND_BEGIN = "Количество открывающих скобок, не равно количеству закрывающих.";
     private final String INCORRECT_PARENTHESES_OPERATIONS = "Некорректная операция в скобке";
@@ -21,12 +22,15 @@ public class SimpleStrings {
     private final String INCORRECT_RPN = "Получена некорректная Обратная польская запись";
     private final String INCORRECT_SYMBOLS = "Выявлены некорректные символы.";
     private final String PROGRAM = "Данная программа может сосчитать введенное Вами математическое выражение";
-    private final String RESULT_YOUR_EXPRESSION = "Результат Вашего выражения : ";
+    private final String RESULT_YOUR_EXPRESSION = "Результат Вашего выражения :";
     private final String RPN_ARRAY = "RPNArray";
     private final String SECOND_TRY = "Хотите попробовать еще раз?";
     private final String TRY = "Хотите попробовать?";
     private final String YES_OR_NO = "Хотите попробовать еще раз?";
     private final String YOUR_EXPRESSION = "Ваше выражение : ";
+    //Хоть IDEA и предлагает сделать их все локальными, оставлю,
+    // мне так больше нравиться, когда все в одном месте
+    //А как все таки правильнее? локальные переменные или все в одном месте?
 
     public String getINCORRECT_EXPRESSION() {
         return INCORRECT_EXPRESSION;
@@ -34,6 +38,10 @@ public class SimpleStrings {
 
     public String getINCORRECT_PARENTHESES_OPERATIONS() {
         return INCORRECT_PARENTHESES_OPERATIONS;
+    }
+
+    public String getFORGOT_MINUS() {
+        return FORGOT_MINUS;
     }
 
     public String getINCORRECT_SYMBOLS() {
