@@ -17,7 +17,8 @@ public class Validate {
         stringHasBadCharacters(value);
         doubleOperations(value);
         simpleParenthesisIncorrect(value);
-        incorrectParenthesesWithSymbols(value);
+        incorrectParenthesesWithoutOperations(value);
+        incorrectParenthesesWithOperations(value);
         incorrectOperations(value);
         stringHasTwoDotInOneCode(value);
     }
@@ -34,9 +35,25 @@ public class Validate {
         }
     }
 
-    private void incorrectParenthesesWithSymbols(String value)
+    private void incorrectParenthesesWithoutOperations(String value)
             throws IncorrectExpressionException {
-        for (String parentheses : simpleRegExp.getNotValidParenthesis()) {
+        for (String parentheses : simpleRegExp.getNotValidParenthesisWithoutOperations()) {
+            Pattern pattern = Pattern.compile(parentheses);
+            Matcher matcher = pattern.matcher(value);
+
+            if (matcher.find()) {
+                if (parentheses.equals("^[)]") || parentheses.equals("[(]$")) {
+                    throwIncorrectExpressionException(matcher, value,
+                            simpleStrings.getINCORRECT_PARENTHESES_BEGIN_OR_END());
+                }
+                throwIncorrectExpressionException(matcher, value,
+                        simpleStrings.getINCORRECT_PARENTHESES_STRING());
+            }
+        }
+    }
+    private void incorrectParenthesesWithOperations(String value)
+            throws IncorrectExpressionException {
+        for (String parentheses : simpleRegExp.getNotValidParenthesisWithoutOperations()) {
             Pattern pattern = Pattern.compile(parentheses);
             Matcher matcher = pattern.matcher(value);
 

@@ -93,7 +93,7 @@ public class SimpleRegExp {
         }
     };
 
-    private List<String> notValidParenthesis = new ArrayList<String>() {
+    private List<String> notValidParenthesisWithoutOperations = new ArrayList<String>() {
         {
             this.add("[(][)]");
             //Для в строке только ()
@@ -107,7 +107,10 @@ public class SimpleRegExp {
             //Для )Цифра
             this.add("[\\d][(]");
             //Для Цифра(
-
+        }
+    };
+    private List<String> notValidParenthesisWithOperations = new ArrayList<String>() {
+        {
             this.add("[(][*]");
             this.add("[(][/]");
             this.add("[(][\\^]");
@@ -120,6 +123,9 @@ public class SimpleRegExp {
             this.add("[-][)]");
             this.add("[+][)]");
             //Некорректные скобки и операции, вида СкобкаОперация или ОперацияСкобка
+
+            //Вабще наверное еще правильно добавить (4), т.к. по ТЗ (-4) - корректно,
+            //а тут возможно что-то не так. Нужно попробовать написать RegExp
         }
     };
 
@@ -131,8 +137,8 @@ public class SimpleRegExp {
         return notValidOperators;
     }
 
-    public List<String> getNotValidParenthesis() {
-        return notValidParenthesis;
+    public List<String> getNotValidParenthesisWithoutOperations() {
+        return notValidParenthesisWithoutOperations;
     }
 
     public List<String> getNotValidOperations() {
