@@ -9,7 +9,8 @@ import epam_final_project.exception.IncorrectRPNArrayException;
 import epam_final_project.rpn.CalculateRPN;
 import epam_final_project.rpn.ParseToRPN;
 import epam_final_project.simple.SimpleStrings;
-import epam_final_project.work.ValidateAndManipulation;
+import epam_final_project.prepare.Manipulation;
+import epam_final_project.prepare.Validate;
 
 import java.util.Collections;
 import java.util.List;
@@ -24,9 +25,10 @@ public class Main {
         CalculateRPN calculateRPN = new CalculateRPN();
         ConsoleInput consoleInput = new ConsoleInput();
         ConsoleOutput consoleOutput = new ConsoleOutput();
+        Manipulation manipulation = new Manipulation();
         ParseToRPN parseToRPN = new ParseToRPN();
         SimpleStrings simpleStrings = new SimpleStrings();
-        ValidateAndManipulation validateAndManipulation = new ValidateAndManipulation();
+        Validate validate = new Validate();
 
         consoleOutput.consoleOutput(simpleStrings.getPROGRAM());
         consoleOutput.consoleOutput(simpleStrings.getTRY());
@@ -39,10 +41,10 @@ public class Main {
             input = "";
             input = consoleInput.scannerInputString();
 
-            input = validateAndManipulation.allStringManipulation(input);
+            input = manipulation.allStringManipulation(input);
 
             try {
-                validateAndManipulation.allStringValidate(input);
+                validate.allStringValidate(input);
                 try {
                     list = parseToRPN.parseToRPN(input);
                     try {

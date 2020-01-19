@@ -1,4 +1,4 @@
-package epam_final_project.work;
+package epam_final_project.prepare;
 
 import epam_final_project.exception.IncorrectExpressionException;
 import epam_final_project.exception.IncorrectParenthesisException;
@@ -8,33 +8,18 @@ import epam_final_project.simple.SimpleStrings;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ValidateAndManipulation {
+public class Validate {
     SimpleStrings simpleStrings = new SimpleStrings();
     SimpleRegExp simpleRegExp = new SimpleRegExp();
-
-
-    public String allStringManipulation(String value) {
-        value = removeSpaces(value);
-        value = replaceCommaDot(value);
-        return value;
-    }
-
-    private String removeSpaces(String value) {
-        //Удаляю пробелы
-        return value.replaceAll(simpleRegExp.getSPACES(), simpleRegExp.getNO_SPACE());
-    }
-
-    private String replaceCommaDot(String value) {
-        //Делаю из запятой точку
-        return value.replaceAll(simpleRegExp.getCOMMA(), simpleRegExp.getDOT());
-    }
 
     public void allStringValidate(String value)
             throws IncorrectParenthesisException, IncorrectExpressionException {
         stringHasBadCharacters(value);
         doubleOperations(value);
-        parenthesisIncorrect(value);
-        incorrectParentheses(value);
+        simpleParenthesisIncorrect(value);
+        incorrectParenthesesWithSymbols(value);
+        incorrectOperations(value);
+        stringHasTwoDotInOneCode(value);
     }
 
     private void doubleOperations(String value) throws IncorrectExpressionException {
@@ -49,7 +34,7 @@ public class ValidateAndManipulation {
         }
     }
 
-    private void incorrectParentheses(String value)
+    private void incorrectParenthesesWithSymbols(String value)
             throws IncorrectExpressionException {
         for (String parentheses : simpleRegExp.getNotValidParenthesis()) {
             Pattern pattern = Pattern.compile(parentheses);
@@ -66,15 +51,20 @@ public class ValidateAndManipulation {
         }
     }
 
-    private void throwIncorrectExpressionException(Matcher matcher, String value, String exceptionString)
+    private void incorrectOperations(String value)
             throws IncorrectExpressionException {
-        int start = matcher.start();
-        int end = matcher.end();
-        throw new IncorrectExpressionException(
-                exceptionString + " " + value.substring(start, end));
+        for (String dots : simpleRegExp.getNotValidOperations()) {
+            Pattern pattern = Pattern.compile(dots);
+            Matcher matcher = pattern.matcher(value);
+
+            if (matcher.find()) {
+                throwIncorrectExpressionException(matcher, value,
+                        simpleStrings.getINCORRECT_OPERATION_BEGIN_OR_END());
+            }
+        }
     }
 
-    public void stringHasTwoDotInOneCode(String value)
+    private void stringHasTwoDotInOneCode(String value)
             throws IncorrectExpressionException {
         for (String dots : simpleRegExp.getNotValidDots()) {
             Pattern pattern = Pattern.compile(dots);
@@ -99,7 +89,8 @@ public class ValidateAndManipulation {
         }
     }
 
-    private void parenthesisIncorrect(String value)
+
+    private void simpleParenthesisIncorrect(String value)
             throws IncorrectParenthesisException {
         //Количество "(" должно быть равно количеству ")".
 
@@ -122,5 +113,13 @@ public class ValidateAndManipulation {
         if (beginParenthesis != endParenthesis) {
             throw new IncorrectParenthesisException(simpleStrings.getINCORRECT_PARENTHESES_END_AND_BEGIN());
         }
+    }
+
+    private void throwIncorrectExpressionException(Matcher matcher, String value, String exceptionString)
+            throws IncorrectExpressionException {
+        int start = matcher.start();
+        int end = matcher.end();
+        throw new IncorrectExpressionException(
+                exceptionString + " " + value.substring(start, end));
     }
 }

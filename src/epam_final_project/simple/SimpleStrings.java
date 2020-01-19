@@ -11,6 +11,7 @@ public class SimpleStrings {
     private final String INCORRECT_EXPRESSION = "Некорректное выражение";
     private final String INCORRECT_EXPRESSION_EMPTY = "Некорректное выражение - пустая строка";
     private final String INCORRECT_OPERATION = "Некорректная операция";
+    private final String INCORRECT_OPERATION_BEGIN_OR_END = "Знак операции в начале или конце выражения";
     private final String INCORRECT_PARENTHESES = "Скобки не согласованы";
     private final String INCORRECT_PARENTHESES_BEGIN_OR_END = "Некорректная скобка, в начале или в конце строки : ";
     private final String INCORRECT_PARENTHESES_END = "Найдена закрывающая скобка, ранее чем открывающая.";
@@ -120,5 +121,9 @@ public class SimpleStrings {
 
     public String getINCORRECT_OPERATION() {
         return INCORRECT_OPERATION;
+    }
+
+    public String getINCORRECT_OPERATION_BEGIN_OR_END() {
+        return INCORRECT_OPERATION_BEGIN_OR_END;
     }
 }

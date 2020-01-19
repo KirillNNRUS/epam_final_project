@@ -28,6 +28,29 @@ public class SimpleRegExp {
         }
     };
 
+    private List<String> notValidOperations = new ArrayList<String>() {
+        {
+            //Операции в начале или к в конце выражения
+            this.add("[*]$");
+            this.add("^[*]");
+
+            this.add("[/]$");
+            this.add("^[/]");
+
+            this.add("[-]$");
+            this.add("^[-]");
+            //Ставлю ошибку - в начала т.к. по ТЗ нужно писать (-4) и значит это ошибка
+
+
+            this.add("[+]$");
+            this.add("^[+]");
+            //Может зря, но + в начале тоже как ошибка, возможно пользователь  что-то забыл
+
+            this.add("[\\^]$");
+            this.add("^[\\^]");
+        }
+    };
+
     private List<String> notValidOperators = new ArrayList<String>() {
         {
             //Сколько не пытался собрать циклом в цикле / и ^ для того, чтобы сделать RegExp,
@@ -88,13 +111,15 @@ public class SimpleRegExp {
             this.add("[(][*]");
             this.add("[(][/]");
             this.add("[(][\\^]");
+            this.add("[(][+]");
+            // (+ тоже решил расценивать как ошибку, что пользователь что-то забыл
+            // (- это по ТЗ -ЗНАЧЕНИЕ, поэтому не включаю
             this.add("[*][)]");
             this.add("[/][)]");
             this.add("[\\^][)]");
             this.add("[-][)]");
             this.add("[+][)]");
             //Некорректные скобки и операции, вида СкобкаОперация или ОперацияСкобка
-
         }
     };
 
@@ -108,6 +133,10 @@ public class SimpleRegExp {
 
     public List<String> getNotValidParenthesis() {
         return notValidParenthesis;
+    }
+
+    public List<String> getNotValidOperations() {
+        return notValidOperations;
     }
 
     public String getNotValidRegExpString() {
